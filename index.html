@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IICS Sales ETL Project — Ankit Goswami</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #0d1117; color: #c9d1d9; }
+
+  /* NAV */
+  nav { background: #161b22; border-bottom: 1px solid #30363d; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  nav .logo { font-size: 18px; font-weight: bold; color: #58a6ff; }
+  nav .links a { color: #8b949e; text-decoration: none; margin-left: 24px; font-size: 14px; }
+  nav .links a:hover { color: #58a6ff; }
+
+  /* HERO */
+  .hero { text-align: center; padding: 80px 40px 60px; background: linear-gradient(180deg, #161b22 0%, #0d1117 100%); border-bottom: 1px solid #30363d; }
+  .hero .badge { display: inline-block; background: #1f6feb22; border: 1px solid #1f6feb; color: #58a6ff; font-size: 12px; padding: 4px 12px; border-radius: 20px; margin-bottom: 20px; }
+  .hero h1 { font-size: 42px; font-weight: 700; color: #f0f6fc; line-height: 1.2; margin-bottom: 16px; }
+  .hero h1 span { color: #58a6ff; }
+  .hero p { font-size: 16px; color: #8b949e; max-width: 600px; margin: 0 auto 30px; line-height: 1.7; }
+  .hero .tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .hero .tag { background: #21262d; border: 1px solid #30363d; color: #8b949e; padding: 6px 14px; border-radius: 20px; font-size: 13px; }
+
+  /* PIPELINE DIAGRAM */
+  .pipeline-section { padding: 60px 40px; max-width: 900px; margin: 0 auto; }
+  .pipeline-section h2 { font-size: 24px; color: #f0f6fc; margin-bottom: 8px; }
+  .pipeline-section .sub { color: #8b949e; margin-bottom: 30px; font-size: 14px; }
+  .pipeline { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; }
+  .p-box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px 20px; text-align: center; min-width: 140px; }
+  .p-box .icon { font-size: 24px; margin-bottom: 6px; }
+  .p-box .title { font-size: 13px; color: #58a6ff; font-weight: 600; }
+  .p-box .desc { font-size: 11px; color: #8b949e; margin-top: 4px; }
+  .p-arrow { color: #58a6ff; font-size: 20px; padding: 0 8px; }
+  .p-arrow.success { color: #3fb950; }
+  .p-arrow.fail { color: #f85149; }
+
+  /* SCREENSHOTS */
+  .screenshots { padding: 60px 40px; max-width: 1100px; margin: 0 auto; }
+  .screenshots h2 { font-size: 24px; color: #f0f6fc; margin-bottom: 8px; }
+  .screenshots .sub { color: #8b949e; margin-bottom: 40px; font-size: 14px; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; margin-bottom: 40px; overflow: hidden; }
+  .card-header { padding: 20px 24px; border-bottom: 1px solid #30363d; display: flex; align-items: flex-start; gap: 16px; }
+  .card-num { background: #1f6feb; color: white; font-size: 13px; font-weight: bold; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .card-info h3 { font-size: 17px; color: #f0f6fc; margin-bottom: 4px; }
+  .card-info p { font-size: 13px; color: #8b949e; line-height: 1.6; }
+  .card img { width: 100%; display: block; border-top: 1px solid #30363d; }
+  .card-footer { padding: 16px 24px; border-top: 1px solid #30363d; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: #21262d; border: 1px solid #30363d; color: #8b949e; padding: 4px 12px; border-radius: 12px; font-size: 12px; }
+  .chip.green { border-color: #3fb950; color: #3fb950; }
+  .chip.blue { border-color: #58a6ff; color: #58a6ff; }
+  .chip.orange { border-color: #d29922; color: #d29922; }
+
+  /* STATS */
+  .stats { background: #161b22; border-top: 1px solid #30363d; border-bottom: 1px solid #30363d; padding: 50px 40px; }
+  .stats-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 30px; text-align: center; }
+  .stat-num { font-size: 36px; font-weight: bold; color: #58a6ff; }
+  .stat-label { font-size: 13px; color: #8b949e; margin-top: 4px; }
+
+  /* TECH STACK */
+  .tech { padding: 60px 40px; max-width: 900px; margin: 0 auto; }
+  .tech h2 { font-size: 24px; color: #f0f6fc; margin-bottom: 30px; }
+  .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .tech-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; }
+  .tech-card h4 { color: #58a6ff; font-size: 14px; margin-bottom: 8px; }
+  .tech-card ul { list-style: none; font-size: 13px; color: #8b949e; line-height: 2; }
+  .tech-card ul li::before { content: "▸ "; color: #3fb950; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 30px; border-top: 1px solid #30363d; color: #8b949e; font-size: 13px; }
+  footer a { color: #58a6ff; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">⚡ IICS Sales ETL Project</div>
+  <div class="links">
+    <a href="#pipeline">Pipeline</a>
+    <a href="#screenshots">Screenshots</a>
+    <a href="#tech">Tech Stack</a>
+    <a href="https://ankitgoswami27.github.io/oracle-sql-guide/" target="_blank">SQL Guide ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">HCL Campus Hackathon 2026</div>
+  <h1>Sales ETL Pipeline<br>built on <span>Informatica IICS</span></h1>
+  <p>A complete cloud-based ETL pipeline that cleanses dirty sales data, aggregates revenue by product category, and orchestrates the workflow using a Taskflow — all built on Informatica Intelligent Cloud Services (CDI).</p>
+  <div class="tags">
+    <span class="tag">Informatica IICS CDI</span>
+    <span class="tag">ETL Pipeline</span>
+    <span class="tag">Data Cleansing</span>
+    <span class="tag">Taskflow Orchestration</span>
+    <span class="tag">Flat File Processing</span>
+    <span class="tag">Expression Transformation</span>
+    <span class="tag">Aggregator</span>
+    <span class="tag">Router</span>
+    <span class="tag">Parameters</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div><div class="stat-num">2</div><div class="stat-label">Mappings Built</div></div>
+    <div><div class="stat-num">40</div><div class="stat-label">Dirty Records Cleansed</div></div>
+    <div><div class="stat-num">50</div><div class="stat-label">Clean Records Aggregated</div></div>
+    <div><div class="stat-num">6</div><div class="stat-label">Transformations Used</div></div>
+    <div><div class="stat-num">1</div><div class="stat-label">Taskflow Orchestrating All</div></div>
+  </div>
+</div>
+
+<!-- PIPELINE -->
+<div class="pipeline-section" id="pipeline">
+  <h2>Pipeline Architecture</h2>
+  <div class="sub">Two-stage pipeline: Cleanse first, then Aggregate. Taskflow ensures Step 2 only runs when Step 1 succeeds.</div>
+  <div class="pipeline">
+    <div class="p-box">
+      <div class="icon">📄</div>
+      <div class="title">Source</div>
+      <div class="desc">sales_transactions<br>_dirty.csv (40 rows)</div>
+    </div>
+    <div class="p-arrow">→</div>
+    <div class="p-box">
+      <div class="icon">🔧</div>
+      <div class="title">exp_DataFixes</div>
+      <div class="desc">Fix qty, discount,<br>price, dates</div>
+    </div>
+    <div class="p-arrow">→</div>
+    <div class="p-box">
+      <div class="icon">🔀</div>
+      <div class="title">Router</div>
+      <div class="desc">PASS → Cleaned<br>FAIL → Rejected</div>
+    </div>
+    <div class="p-arrow success">→</div>
+    <div class="p-box" style="border-color:#3fb950">
+      <div class="icon">✅</div>
+      <div class="title">Taskflow</div>
+      <div class="desc">TF_Sales_Pipeline<br>Step1 → Step2</div>
+    </div>
+    <div class="p-arrow">→</div>
+    <div class="p-box">
+      <div class="icon">📊</div>
+      <div class="title">agg_Category</div>
+      <div class="desc">Revenue &amp; Qty<br>per Product ID</div>
+    </div>
+    <div class="p-arrow">→</div>
+    <div class="p-box">
+      <div class="icon">📁</div>
+      <div class="title">Target CSVs</div>
+      <div class="desc">3 output files<br>generated</div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREENSHOTS -->
+<div class="screenshots" id="screenshots">
+  <h2>Project Screenshots</h2>
+  <div class="sub">Step-by-step evidence of the complete IICS implementation</div>
+
+  <!-- Card 1 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">1</div>
+      <div class="card-info">
+        <h3>Mapping 1 — m_Clean_Dirty_Transactions</h3>
+        <p>Reads 40 rows of intentionally dirty sales data. The <strong>Expression transformation (exp_DataFixes)</strong> fixes negative quantities, invalid discounts, and null values. The <strong>Router</strong> splits records into PASS (cleaned) and FAIL (rejected) groups, writing to two separate target CSV files.</p>
+      </div>
+    </div>
+    <img src="screenshots/01_cleansing_mapping.png" alt="Cleansing Mapping Canvas">
+    <div class="card-footer">
+      <span class="chip blue">Source → Expression → Router → 2 Targets</span>
+      <span class="chip green">Valid ✓</span>
+      <span class="chip">Flat File Connection</span>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">2</div>
+      <div class="card-info">
+        <h3>Expression Transformation — exp_DataFixes Logic</h3>
+        <p>Six output ports handle all data quality fixes: <strong>o_QUANTITY</strong> uses ABS(TO_INTEGER()) to fix negative values, <strong>o_DISCOUNT</strong> corrects invalid percentages, <strong>o_DATE_FIXED</strong> validates date formats using IS_DATE(), and <strong>o_REJECT_FLAG</strong> determines PASS/FAIL using nested IIF conditions checking nulls, ranges, and formats.</p>
+      </div>
+    </div>
+    <img src="screenshots/02_expression_ports.png" alt="Expression Ports">
+    <div class="card-footer">
+      <span class="chip blue">6 Output Ports</span>
+      <span class="chip orange">TO_INTEGER · TO_DECIMAL · IIF · IS_DATE · ISNULL</span>
+      <span class="chip">Type Conversion Required for Flat Files</span>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">3</div>
+      <div class="card-info">
+        <h3>Mapping 2 — m_Category_Summary</h3>
+        <p>Reads 50 clean sales records. The <strong>Expression (exp_Revenue)</strong> calculates revenue per row as <code>QUANTITY × UNIT_PRICE × (1 − DISCOUNT/100)</code>. The <strong>Aggregator (agg_Category)</strong> groups by PRODUCT_ID and computes TOTAL_QUANTITY, TOTAL_REVENUE, and AVG_DISCOUNT. Output written to TGT_CATEGORY_SUMMARY.csv.</p>
+      </div>
+    </div>
+    <img src="screenshots/03_category_mapping.png" alt="Category Summary Mapping">
+    <div class="card-footer">
+      <span class="chip blue">Source → Expression → Aggregator → Target</span>
+      <span class="chip green">SUM · AVG · GROUP BY</span>
+      <span class="chip">Revenue Calculation</span>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">4</div>
+      <div class="card-info">
+        <h3>Taskflow — TF_Sales_Pipeline</h3>
+        <p>Orchestrates both mappings automatically. <strong>Step1_Cleanse</strong> runs first. Only on SUCCESS does <strong>Step2_Category</strong> execute — ensuring analytical reports are never built on uncleaned data. If Step 1 fails, the pipeline stops immediately. Both steps are connected as Mapping Tasks inside the Taskflow canvas.</p>
+      </div>
+    </div>
+    <img src="screenshots/04_taskflow.png" alt="Taskflow Canvas">
+    <div class="card-footer">
+      <span class="chip blue">Start → Step1_Cleanse → Step2_Category → End</span>
+      <span class="chip green">Valid ✓ · On Success condition</span>
+      <span class="chip">Sequential Orchestration</span>
+    </div>
+  </div>
+
+  <!-- Card 5 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">5</div>
+      <div class="card-info">
+        <h3>My Jobs — Execution History</h3>
+        <p>The <strong>TF_Sales_Pipeline ran successfully</strong> on Mar 10, 2026 with 2 subtasks — both mapping tasks completed without errors. Previous runs visible include <strong>m_Clean_Dirty_Transactions</strong> (40 rows processed) and <strong>m_load_stg_sales_raw</strong> (500,000 rows — demonstrating large-scale capability). Full job history shows the project's development progression.</p>
+      </div>
+    </div>
+    <img src="screenshots/05_jobs_success.png" alt="Jobs Success">
+    <div class="card-footer">
+      <span class="chip green">TF_Sales_Pipeline — Success ✓</span>
+      <span class="chip green">2 Subtasks Completed</span>
+      <span class="chip orange">500K rows processed in earlier runs</span>
+    </div>
+  </div>
+</div>
+
+<!-- TECH STACK -->
+<div class="tech" id="tech">
+  <h2>Technology & Concepts Used</h2>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <h4>IICS Transformations</h4>
+      <ul>
+        <li>Source (Flat File)</li>
+        <li>Expression</li>
+        <li>Router</li>
+        <li>Aggregator</li>
+        <li>Filter</li>
+        <li>Target (Flat File)</li>
+      </ul>
+    </div>
+    <div class="tech-card">
+      <h4>IICS Functions Used</h4>
+      <ul>
+        <li>TO_INTEGER()</li>
+        <li>TO_DECIMAL()</li>
+        <li>ABS()</li>
+        <li>IIF()</li>
+        <li>IS_DATE()</li>
+        <li>ISNULL()</li>
+      </ul>
+    </div>
+    <div class="tech-card">
+      <h4>Pipeline Features</h4>
+      <ul>
+        <li>Input Parameters</li>
+        <li>In-Out Parameters</li>
+        <li>Mapping Tasks</li>
+        <li>Taskflow Orchestration</li>
+        <li>Success/Fail routing</li>
+        <li>Secure Agent</li>
+      </ul>
+    </div>
+    <div class="tech-card">
+      <h4>Data Quality Rules</h4>
+      <ul>
+        <li>Negative qty fix</li>
+        <li>Discount range check</li>
+        <li>Null field detection</li>
+        <li>Date format validation</li>
+        <li>Record rejection</li>
+        <li>Audit trail</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Built by <strong>Ankit Goswami</strong> · IMS Engineering College · HCL Campus Hackathon 2026 &nbsp;|&nbsp;
+  <a href="https://ankitgoswami27.github.io/oracle-sql-guide/" target="_blank">Oracle SQL & PL/SQL Guide ↗</a>
+</footer>
+
+</body>
+</html>
