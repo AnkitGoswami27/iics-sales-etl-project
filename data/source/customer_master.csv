@@ -1,0 +1,21 @@
+CUSTOMER_ID,CUSTOMER_NAME,EMAIL,CITY,STATE,REGISTRATION_DATE
+201,Amit Sharma,amit.sharma@email.com,Mumbai,Maharashtra,2024-11-23
+202,Priya Patel,priya.patel@email.com,Pune,Maharashtra,2024-02-27
+203,Rahul Gupta,rahul.gupta@email.com,Bangalore,Karnataka,2024-01-13
+204,Sneha Singh,sneha.singh@email.com,Mysore,Karnataka,2024-05-20
+205,Vikram Kumar,vikram.kumar@email.com,Chennai,Tamil Nadu,2024-05-05
+206,Anjali Reddy,anjali.reddy@email.com,Coimbatore,Tamil Nadu,2024-04-24
+207,Rohit Nair,rohit.nair@email.com,New Delhi,Delhi,2024-03-12
+208,Neha Joshi,neha.joshi@email.com,Lucknow,Uttar Pradesh,2024-02-22
+209,Suresh Verma,suresh.verma@email.com,Noida,Uttar Pradesh,2024-12-12
+210,Kavita Das,kavita.das@email.com,Ahmedabad,Gujarat,2024-10-06
+211,Arjun Mehta,arjun.mehta@email.com,Jaipur,Rajasthan,2024-02-14
+212,Pooja Rao,pooja.rao@email.com,Kolkata,West Bengal,2024-10-29
+213,Deepak Mishra,deepak.mishra@email.com,Hyderabad,Telangana,2024-08-04
+214,Swati Iyer,swati.iyer@email.com,Kochi,Kerala,2024-01-17
+215,Manoj Chopra,manoj.chopra@email.com,Bhopal,Madhya Pradesh,2024-01-16
+216,Ritu Bose,ritu.bose@email.com,Chandigarh,Punjab,2024-02-17
+217,Sanjay Pandey,sanjay.pandey@email.com,Patna,Bihar,2024-04-21
+218,Divya Thakur,divya.thakur@email.com,Bhubaneswar,Odisha,2024-04-29
+219,Kiran Agarwal,kiran.agarwal@email.com,Guwahati,Assam,2024-09-15
+220,Meera Sethi,meera.sethi@email.com,Gurugram,Haryana,2024-11-04

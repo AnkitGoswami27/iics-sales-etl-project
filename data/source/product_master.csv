@@ -1,0 +1,11 @@
+PRODUCT_ID,PRODUCT_NAME,CATEGORY,SUPPLIER,COST_PRICE
+101,Laptop,Electronics,TechCorp,45000.0
+102,Smartphone,Electronics,MobileInc,25000.0
+103,Headphones,Electronics,AudioPro,2000.0
+104,Running Shoes,Footwear,SportMax,3500.0
+105,Formal Shoes,Footwear,ClassicWear,4200.0
+106,T-Shirt,Clothing,FashionHub,800.0
+107,Jeans,Clothing,DenimWorld,1500.0
+108,Office Chair,Furniture,ComfortPlus,8500.0
+109,Study Table,Furniture,WoodCraft,6200.0
+110,Novel Book,Books,ReadMore,350.0
