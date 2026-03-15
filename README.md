@@ -221,6 +221,7 @@ Source data was programmatically generated using Python to simulate real-world d
 - **Parameterized mappings:** Using Input and In-Out parameters for reusable, configurable pipelines
 - **Conditional orchestration:** Taskflow On-Success links prevent downstream processing of bad data
 - **Data quality design:** Separating cleansing from analytics into distinct mappings follows separation of concerns principle
+- **Preparation enablement:** A concise quick-reference cheat sheet supports faster formula recall during timed implementation rounds
 
 ---
 
